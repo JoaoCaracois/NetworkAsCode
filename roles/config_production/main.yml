@@ -1,0 +1,13 @@
+---
+- name: Config Production Routers
+  hosts: production
+  gather_facts: false
+  pre_tasks:
+    - include_vars: "../../config_vars/clab-chain-{{inventory_hostname}}.yml"
+
+  tasks:
+  #--------------------ARISTA--------------------------#
+    - name: Configure Arista Routers in Production using template 
+      ansible.netcommon.cli_config:
+        config: "{{ lookup('template', '../../templates/{{ansible_network_os}}.j2') }}"
+      when: ansible_network_os == 'arista.eos.eos'

@@ -1,0 +1,29 @@
+name: star
+
+topology:
+  nodes:
+    ceos1:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos2:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos3:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos4:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos5:
+      kind: ceos
+      image: ceos:4.28.0F
+
+  links:
+    - endpoints: ["ceos1:eth1", "ceos2:eth1"]
+    - endpoints: ["ceos1:eth2", "ceos3:eth1"]
+    - endpoints: ["ceos1:eth3", "ceos4:eth1"]
+    - endpoints: ["ceos1:eth4", "ceos5:eth1"]
+    - endpoints: ["ceos1:eth5", "ceos2:eth2"]
+    - endpoints: ["ceos1:eth6", "ceos3:eth2"]
+    - endpoints: ["ceos1:eth7", "ceos4:eth2"]
+    - endpoints: ["ceos1:eth8", "ceos5:eth2"]

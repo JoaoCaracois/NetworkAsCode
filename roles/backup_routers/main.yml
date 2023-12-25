@@ -1,0 +1,21 @@
+---
+- name: Backup Arista Router Configuration
+  hosts: arista
+  connection: local
+  gather_facts: false
+
+  tasks:
+
+    - name: Get Configuration
+      ansible.netcommon.cli_command:
+        command: sh run
+      register: config_output
+
+    # - name: Display result
+    #   debug:
+    #     var: config_output.stdout
+
+    - name: Save Configuration to a File
+      copy:
+        content: "{{ config_output.stdout }}"
+        dest: "/home/jcaracois/backup_configs/{{ inventory_hostname }}.txt"

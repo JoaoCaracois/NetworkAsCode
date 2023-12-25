@@ -1,0 +1,104 @@
+credentials:
+  - username: admin1
+    password: admin1
+interfaces:
+  - name: Ethernet1
+    ipv4_addr: 172.16.23.2/24
+  - name: Ethernet2
+    ipv4_addr: 172.16.34.1/24
+  - name: Ethernet3
+    ipv4_addr: 192.168.23.2/24
+  - name: Ethernet4
+    ipv4_addr: 192.168.34.1/24
+  - name: Loopback0
+    ipv4_addr: 172.16.0.3/32
+  - name: Ethernet5
+    ipv4_addr: 172.16.13.2/24
+  - name: Ethernet6
+    ipv4_addr: 172.16.35.1/24
+  - name: Ethernet7
+    ipv4_addr: 192.168.13.2/24
+  - name: Ethernet8
+    ipv4_addr: 192.168.35.1/24
+ospf:
+  processID: 3
+  router_id: 172.16.0.3
+  no_passive_interfaces:
+    - Ethernet1
+    - Ethernet2
+    - Ethernet5
+    - Ethernet6
+  networks:
+    - ip: 172.16.34.0/24
+      area: 0.0.0.0
+    - ip: 172.16.23.0/24
+      area: 0.0.0.0
+    - ip: 172.16.0.3/32
+      area: 0.0.0.0
+    - ip: 172.16.35.0/24
+      area: 0.0.0.0
+    - ip: 172.16.13.0/24
+      area: 0.0.0.0
+bgp:
+  AS: 65003
+  neighbors:
+    - ipv4_addr: 172.16.23.1
+      AS: 65002
+    - ipv4_addr: 172.16.34.2
+      AS: 65004
+    - ipv4_addr: 172.16.13.1
+      AS: 65001
+    - ipv4_addr: 172.16.35.2
+      AS: 65005
+  advertises:
+    - network: 172.16.0.3
+      mask: 255.255.255.255
+    - network: 172.16.23.0
+      mask: 255.255.255.0
+    - network: 172.16.34.0
+      mask: 255.255.255.0
+    - network: 172.16.13.0
+      mask: 255.255.255.0
+    - network: 172.16.35.0
+      mask: 255.255.255.0
+dhcp:
+  subnets:
+    - interface: Ethernet3
+      network: 192.168.23.0/24
+      gateway: 192.168.23.2
+      dns_server:
+        - 8.8.8.8
+        - 8.8.4.4
+      start: 192.168.23.3
+      end: 192.168.23.10
+      lease: 1 days 0 hours 0 minutes
+    - interface: Ethernet4
+      network: 192.168.34.0/24
+      gateway: 192.168.34.1
+      dns_server:
+        - 1.1.1.1
+        - 8.8.4.4
+      start: 192.168.34.2
+      end: 192.168.34.10
+      lease: 2 days 0 hours 0 minutes
+    - interface: Ethernet7
+      network: 192.168.13.0/24
+      gateway: 192.168.13.2
+      dns_server:
+        - 1.1.1.1
+        - 8.8.4.4
+      start: 192.168.13.3
+      end: 192.168.13.10
+      lease: 2 days 0 hours 0 minutes
+    - interface: Ethernet8
+      network: 192.168.35.0/24
+      gateway: 192.168.35.1
+      dns_server:
+        - 1.1.1.1
+        - 8.8.4.4
+      start: 192.168.35.2
+      end: 192.168.35.10
+      lease: 2 days 0 hours 0 minutes
+ntp_servers:
+  - 172.16.0.3
+  - 172.16.3.3

@@ -1,0 +1,27 @@
+---
+- name: Run DHCP Tests
+  hosts: arista
+  connection: local
+  gather_facts: false
+  pre_tasks:
+    - include_vars: "../../config_vars/{{inventory_hostname}}.yml"
+
+  tasks:
+    - name: execute dhcp test script
+      ansible.builtin.script: 
+        executable: python3
+        cmd: test_dhcp.py {{inventory_hostname}} {{ansible_user}} {{ansible_password}} {{ansible_network_os}}
+      register: output
+      when: bgp is defined
+
+    # - name: Display result
+    #   debug:
+    #     var: output
+
+    - name: Check DHCP tests
+      assert:
+        that:
+          - '"True" in output.stdout_lines'
+        fail_msg: "DHCP failed to be tested. Please check {{inventory_hostname}} configuration"
+        success_msg: '{{inventory_hostname}} configuration seems correct.'
+      when: ansible_network_os == 'arista.eos.eos' and dhcp is defined

@@ -1,0 +1,53 @@
+{% for credential in credentials %}
+username {{ credential.username }} secret {{ credential.password }}
+{% endfor %}
+{% for interface in interfaces %}
+{% if 'Loopback' in interface.name %}
+interface {{ interface.name }}
+ip address {{ interface.ipv4_addr }}
+{% else %}
+interface {{ interface.name }}
+ip address {{ interface.ipv4_addr }}
+no switchport
+{% endif %}
+{% endfor %}
+{% if ospf is defined %}
+ip routing
+router ospf {{ ospf.processID }}
+router-id {{ ospf.router_id }}
+{% for passInt in ospf.no_passive_interfaces %}
+no passive-interface {{ passInt }}
+{% endfor %}
+{% for net in ospf.networks %}
+network {{ net.ip }} area {{ net.area }}
+{% endfor %}
+{% endif %}
+{% if bgp is defined %}
+ip routing
+router bgp {{bgp.AS}}
+{% for bgp_neigh in bgp.neighbors %}
+neighbor {{bgp_neigh.ipv4_addr}} remote-as {{bgp_neigh.AS}}
+{% endfor %}
+{% for advertise in bgp.advertises %}
+network {{advertise.network}} mask {{advertise.mask}} 
+{% endfor %}
+{% endif %}
+{% if dhcp is defined %}
+{% for dhcp_subnet in dhcp.subnets %}
+interface {{ dhcp_subnet.interface }}
+dhcp server ipv4
+dhcp server
+subnet {{ dhcp_subnet.network }}
+default-gateway {{ dhcp_subnet.gateway }}
+range {{ dhcp_subnet.start }} {{ dhcp_subnet.end }}
+lease time {{ dhcp_subnet.lease }}
+dns server {% for server in dhcp_subnet.dns_server %}{{ server }} {% endfor %}
+
+{% endfor %}
+{% endif %}
+
+{% if ntp_servers is defined %}
+{% for ntp_server in ntp_servers %}
+ntp server {{ ntp_server }}
+{% endfor %}
+{% endif %}

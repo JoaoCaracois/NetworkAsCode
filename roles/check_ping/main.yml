@@ -1,0 +1,74 @@
+---
+- name: Run Ping Tests
+  hosts: arista
+  connection: local
+  gather_facts: false
+  pre_tasks:
+    - include_vars: "../../config_vars/{{inventory_hostname}}.yml"
+
+  tasks:
+
+    - name: execute ping test script
+      ansible.builtin.script: 
+        executable: python3
+        cmd: test_ping.py {{inventory_hostname}} {{ansible_user}} {{ansible_password}} {{ansible_network_os}}
+      register: output
+
+    # - name: Display result
+    #   debug:
+    #     var: output
+
+    - name: Check ping tests
+      assert:
+        that:
+          - '"True" in output.stdout_lines'
+        fail_msg: "Ping failed to be tested. Please check {{inventory_hostname}} configuration"
+        success_msg: '{{inventory_hostname}} configuration seems correct.'
+      when: ansible_network_os == 'arista.eos.eos' and ntp is defined
+
+
+    # - name: Collect Interface and IP Status
+    #   eos_command:
+    #     commands:
+    #       - ping 8.8.8.8
+    #   register: output
+    #   when: ansible_network_os == 'arista.eos.eos'
+
+    # - name: Collect Interface and IP Status
+    #   eos_command:
+    #     commands:
+    #       - sh ip arp | grep -vE "Loopback|Management" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+'
+    #   register: output
+    #   when: ansible_network_os == 'arista.eos.eos'
+
+    # - name: Collect Interface and IP Status
+    #   eos_command:
+    #     commands:
+    #       - ping {{item}}
+    #   register: ping_info
+    #   loop: "{{output.stdout_lines[0]}}"
+    #   when: ansible_network_os == 'arista.eos.eos'
+
+    # - name: Display result
+    #   debug:
+    #     var: output
+    #   # loop: "{{output.stdout_lines[0]}}"
+    #   # loop_control:
+    #   #   index_var: index
+
+    # - name: Check if IP is correct and corresponds to specified interface Arista
+    #   assert:
+    #     that:
+    #       - '"0% packet loss" or "25% packet loss" or "50% packet loss" or "75% packet loss" in ping_info.results[0].stdout_lines[0][8]'
+    #       # - 'item.ipv4_addr in output.results[index].stdout_lines[1].split()[3]'
+    #       # - 'item.name in output.results[index].stdout_lines[0].split()[0]'
+    #     fail_msg: "IP of {{item}} from {{inventory_hostname}} is incorrect"
+    #     success_msg: "IP of {{item}} from {{inventory_hostname}} is correct"
+    #   loop: "{{output.stdout_lines[0]}}"
+    #   # loop_control:
+    #   #   index_var: index
+    #   when: ansible_network_os == 'arista.eos.eos'
+
+    # - name: Display result
+    #   debug:
+    #     var: '"0% packet loss" or "25% packet loss" or "50% packet loss" or "75% packet loss" in output.stdout_lines[0][8].split(',')[2]'

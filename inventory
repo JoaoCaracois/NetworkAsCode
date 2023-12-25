@@ -1,0 +1,22 @@
+[arista]
+clab-chain-ceos1
+clab-chain-ceos2
+clab-chain-ceos3
+clab-chain-ceos4
+clab-chain-ceos5
+
+[production]
+ceos1 
+ceos2 
+ceos3 
+ceos4 
+ceos5 
+
+[arista:vars]
+ansible_become_method=enable
+ansible_become=yes
+ansible_user=admin
+ansible_password=admin
+ansible_network_os=arista.eos.eos
+ansible_connection=network_cli
+ANSIBLE_HOST_KEY_CHECKING = False

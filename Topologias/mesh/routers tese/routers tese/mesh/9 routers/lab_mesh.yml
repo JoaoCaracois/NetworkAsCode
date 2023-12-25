@@ -1,0 +1,105 @@
+name: mesh
+
+topology:
+  nodes:
+    ceos1:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos2:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos3:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos4:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos5:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos6:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos7:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos8:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos9:
+      kind: ceos
+      image: ceos:4.28.0F
+
+  links:
+    - endpoints: ["ceos1:eth1", "ceos2:eth1"]
+    - endpoints: ["ceos2:eth2", "ceos3:eth1"]
+    - endpoints: ["ceos3:eth2", "ceos4:eth1"]
+    - endpoints: ["ceos4:eth2", "ceos5:eth1"]
+    - endpoints: ["ceos5:eth2", "ceos6:eth1"]
+    - endpoints: ["ceos6:eth2", "ceos7:eth1"]
+    - endpoints: ["ceos7:eth2", "ceos8:eth1"]
+    - endpoints: ["ceos8:eth2", "ceos9:eth1"]
+    - endpoints: ["ceos9:eth2", "ceos1:eth2"]
+    - endpoints: ["ceos1:eth3", "ceos3:eth7"]
+    - endpoints: ["ceos1:eth4", "ceos4:eth7"]
+    - endpoints: ["ceos1:eth5", "ceos5:eth7"]
+    - endpoints: ["ceos1:eth6", "ceos6:eth5"]
+    - endpoints: ["ceos1:eth7", "ceos7:eth4"]
+    - endpoints: ["ceos1:eth8", "ceos8:eth3"]
+    - endpoints: ["ceos2:eth6", "ceos7:eth5"]
+    - endpoints: ["ceos2:eth4", "ceos5:eth6"]
+    - endpoints: ["ceos2:eth5", "ceos6:eth6"]
+    - endpoints: ["ceos2:eth3", "ceos4:eth8"]
+    - endpoints: ["ceos2:eth7", "ceos8:eth4"]
+    - endpoints: ["ceos2:eth8", "ceos9:eth3"]
+    - endpoints: ["ceos3:eth8", "ceos9:eth4"]
+    - endpoints: ["ceos3:eth6", "ceos8:eth5"]
+    - endpoints: ["ceos3:eth5", "ceos7:eth6"]
+    - endpoints: ["ceos3:eth4", "ceos6:eth8"]
+    - endpoints: ["ceos3:eth3", "ceos5:eth8"]
+    - endpoints: ["ceos4:eth6", "ceos9:eth5"]
+    - endpoints: ["ceos4:eth5", "ceos8:eth6"]
+    - endpoints: ["ceos4:eth4", "ceos7:eth7"]
+    - endpoints: ["ceos4:eth3", "ceos6:eth7"]
+    - endpoints: ["ceos5:eth3", "ceos7:eth8"]
+    - endpoints: ["ceos5:eth4", "ceos8:eth7"]
+    - endpoints: ["ceos5:eth5", "ceos9:eth6"]
+    - endpoints: ["ceos6:eth3", "ceos8:eth8"]
+    - endpoints: ["ceos6:eth4", "ceos9:eth7"]
+    - endpoints: ["ceos7:eth3", "ceos9:eth8"]
+    - endpoints: ["ceos1:eth9", "ceos2:eth9"]
+    - endpoints: ["ceos2:eth10", "ceos3:eth9"]
+    - endpoints: ["ceos3:eth10", "ceos4:eth9"]
+    - endpoints: ["ceos4:eth10", "ceos5:eth9"]
+    - endpoints: ["ceos5:eth10", "ceos6:eth9"]
+    - endpoints: ["ceos6:eth10", "ceos7:eth9"]
+    - endpoints: ["ceos7:eth10", "ceos8:eth9"]
+    - endpoints: ["ceos8:eth10", "ceos9:eth9"]
+    - endpoints: ["ceos9:eth10", "ceos1:eth10"]
+    - endpoints: ["ceos1:eth11", "ceos3:eth15"]
+    - endpoints: ["ceos1:eth12", "ceos4:eth15"]
+    - endpoints: ["ceos1:eth13", "ceos5:eth15"]
+    - endpoints: ["ceos1:eth14", "ceos6:eth13"]
+    - endpoints: ["ceos1:eth15", "ceos7:eth12"]
+    - endpoints: ["ceos1:eth16", "ceos8:eth11"]
+    - endpoints: ["ceos2:eth14", "ceos7:eth13"]
+    - endpoints: ["ceos2:eth12", "ceos5:eth14"]
+    - endpoints: ["ceos2:eth13", "ceos6:eth14"]
+    - endpoints: ["ceos2:eth11", "ceos4:eth16"]
+    - endpoints: ["ceos2:eth15", "ceos8:eth12"]
+    - endpoints: ["ceos2:eth16", "ceos9:eth11"]
+    - endpoints: ["ceos3:eth16", "ceos9:eth12"]
+    - endpoints: ["ceos3:eth14", "ceos8:eth13"]
+    - endpoints: ["ceos3:eth13", "ceos7:eth14"]
+    - endpoints: ["ceos3:eth12", "ceos6:eth16"]
+    - endpoints: ["ceos3:eth11", "ceos5:eth16"]
+    - endpoints: ["ceos4:eth14", "ceos9:eth13"]
+    - endpoints: ["ceos4:eth13", "ceos8:eth14"]
+    - endpoints: ["ceos4:eth12", "ceos7:eth15"]
+    - endpoints: ["ceos4:eth11", "ceos6:eth15"]
+    - endpoints: ["ceos5:eth11", "ceos7:eth16"]
+    - endpoints: ["ceos5:eth12", "ceos8:eth15"]
+    - endpoints: ["ceos5:eth13", "ceos9:eth14"]
+    - endpoints: ["ceos6:eth11", "ceos8:eth16"]
+    - endpoints: ["ceos6:eth12", "ceos9:eth15"]
+    - endpoints: ["ceos7:eth11", "ceos9:eth16"]

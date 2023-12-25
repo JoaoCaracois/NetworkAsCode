@@ -1,0 +1,19 @@
+name: mesh
+
+topology:
+  nodes:
+    ceos1:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos2:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos3:
+      kind: ceos
+      image: ceos:4.28.0F
+
+  links:
+    - endpoints: ["ceos1:eth1", "ceos2:eth1"]
+    - endpoints: ["ceos2:eth2", "ceos3:eth1"]
+    - endpoints: ["ceos2:eth3", "ceos3:eth2"]
+    - endpoints: ["ceos2:eth4", "ceos3:eth3"]

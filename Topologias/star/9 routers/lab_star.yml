@@ -1,0 +1,49 @@
+name: star
+
+topology:
+  nodes:
+    ceos1:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos2:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos3:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos4:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos5:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos6:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos7:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos8:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos9:
+      kind: ceos
+      image: ceos:4.28.0F
+
+  links:
+    - endpoints: ["ceos1:eth1", "ceos2:eth1"]
+    - endpoints: ["ceos1:eth2", "ceos3:eth1"]
+    - endpoints: ["ceos1:eth3", "ceos4:eth1"]
+    - endpoints: ["ceos1:eth4", "ceos5:eth1"]
+    - endpoints: ["ceos1:eth5", "ceos6:eth1"]
+    - endpoints: ["ceos1:eth6", "ceos7:eth1"]
+    - endpoints: ["ceos1:eth13", "ceos8:eth1"]
+    - endpoints: ["ceos1:eth14", "ceos9:eth1"]
+    - endpoints: ["ceos1:eth7", "ceos2:eth2"]
+    - endpoints: ["ceos1:eth8", "ceos3:eth2"]
+    - endpoints: ["ceos1:eth9", "ceos4:eth2"]
+    - endpoints: ["ceos1:eth10", "ceos5:eth2"]
+    - endpoints: ["ceos1:eth11", "ceos6:eth2"]
+    - endpoints: ["ceos1:eth12", "ceos7:eth2"]
+    - endpoints: ["ceos1:eth15", "ceos8:eth2"]
+    - endpoints: ["ceos1:eth16", "ceos9:eth2"]

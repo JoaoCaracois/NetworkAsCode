@@ -1,0 +1,34 @@
+---
+- name: Run IP Address Tests
+  hosts: arista
+  connection: local
+  gather_facts: false
+  pre_tasks:
+    - include_vars: "../../config_vars/{{inventory_hostname}}.yml"
+
+  tasks:
+    - name: Collect Interface and IP Status
+      eos_command:
+        commands:
+          - show ip int {{item.name}}
+      register: output
+      loop: "{{interfaces}}"
+      when: ansible_network_os == 'arista.eos.eos'
+
+    # - name: Display result
+    #   debug:
+    #     var: output.results[0].stdout_lines[0][1]
+
+    - name: Check if IP is correct and interface is up
+      assert:
+        that:
+          - 'item.ipv4_addr in output.results[index].stdout_lines[0][1]'
+          - 'item.name in output.results[index].stdout_lines[0][0]'
+          - '"up" in output.results[index].stdout_lines[0][0]'
+        fail_msg: "IP of {{item.name}} from {{inventory_hostname}} is incorrect"
+        success_msg: "IP of {{item.name}} from {{inventory_hostname}} is correct"
+      loop: "{{interfaces}}"
+      loop_control:
+        index_var: index
+      when: ansible_network_os == 'arista.eos.eos'
+

@@ -1,0 +1,112 @@
+stages:
+    - build
+    - configuration
+    - test
+    - backup
+    - cleanup
+    - production
+
+# check_syntax:
+#   stage: build
+#   script:
+#     - echo "A verificar a sintaxe do playbook..."
+#     - cd roles
+#     - ansible-playbook main.yml --syntax-check
+#     - echo "Verificacao completa."
+#   tags:
+#     - server
+#   rules:
+#   - changes:
+#       - roles/**/*
+
+deploy_lab:
+    stage: build
+    tags:
+        - server
+    script:
+        - cd ..
+        - export ANSIBLE_HOST_KEY_CHECKING=False
+        - sudo containerlab deploy -t NetworkAsCode/lab_chain.yml --reconfigure
+        # - sudo containerlab graph -t NetworkAsCode/lab_chain.yml
+        # - ^C
+        - cd ..
+
+configure_lab:
+    stage: configuration
+    tags:
+        - server
+    script:
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook roles/config/main.yml -i "inventory"
+    retry: 2
+
+test_ip_address:
+    stage: test
+    tags:
+        - server
+    script:
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook roles/check_ip_address/main.yml -i "inventory"
+    retry: 2
+
+test_ospf_neighbors:
+    stage: test
+    tags:
+        - server
+    script:
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook roles/check_ospf_neighbors/main.yml -i "inventory" -vvv
+    retry: 2
+
+test_bgp:
+    stage: test
+    tags:
+        - server
+    script:
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook roles/check_bgp/main.yml -i "inventory" 
+    retry: 2
+
+test_ping:
+    stage: test
+    tags:
+        - server
+    script:
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook roles/check_ping/main.yml -i "inventory"
+    retry: 2
+
+test_dhcp:
+    stage: test
+    tags:
+        - server
+    script:
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook roles/check_dhcp/main.yml -i "inventory"
+    retry: 2
+
+test_ntp:
+    stage: test
+    tags:
+        - server
+    script:
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook roles/check_ntp/main.yml -i "inventory"
+    retry: 2
+
+backup_configs:
+    stage: backup
+    tags:
+        - server
+    script:
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook roles/backup_routers/main.yml -i "inventory"
+    retry: 2
+
+destroy_lab:
+    stage: cleanup
+    tags:
+        - server
+    script:
+        - sudo containerlab destroy -t lab_chain.yml
+    retry: 2
+
+config_production:
+    stage: production
+    tags:
+        - server
+    script:
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook roles/config_production/main.yml -i "inventory" 
+    retry: 2

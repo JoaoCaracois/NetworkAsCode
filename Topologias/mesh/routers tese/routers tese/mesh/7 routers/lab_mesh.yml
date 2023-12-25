@@ -1,0 +1,69 @@
+name: mesh
+
+topology:
+  nodes:
+    ceos1:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos2:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos3:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos4:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos5:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos6:
+      kind: ceos
+      image: ceos:4.28.0F
+    ceos7:
+      kind: ceos
+      image: ceos:4.28.0F
+
+  links:
+    - endpoints: ["ceos1:eth1", "ceos2:eth1"]
+    - endpoints: ["ceos2:eth2", "ceos3:eth1"]
+    - endpoints: ["ceos3:eth2", "ceos4:eth1"]
+    - endpoints: ["ceos4:eth2", "ceos5:eth1"]
+    - endpoints: ["ceos5:eth2", "ceos6:eth1"]
+    - endpoints: ["ceos6:eth2", "ceos7:eth1"]
+    - endpoints: ["ceos7:eth2", "ceos1:eth2"]
+    - endpoints: ["ceos1:eth3", "ceos3:eth6"]
+    - endpoints: ["ceos1:eth4", "ceos4:eth5"]
+    - endpoints: ["ceos1:eth5", "ceos5:eth4"]
+    - endpoints: ["ceos1:eth6", "ceos6:eth3"]
+    - endpoints: ["ceos2:eth6", "ceos7:eth3"]
+    - endpoints: ["ceos2:eth5", "ceos6:eth4"]
+    - endpoints: ["ceos2:eth4", "ceos5:eth5"]
+    - endpoints: ["ceos2:eth3", "ceos4:eth6"]
+    - endpoints: ["ceos3:eth5", "ceos7:eth4"]
+    - endpoints: ["ceos3:eth4", "ceos6:eth5"]
+    - endpoints: ["ceos3:eth3", "ceos5:eth6"]
+    - endpoints: ["ceos4:eth4", "ceos7:eth5"]
+    - endpoints: ["ceos4:eth3", "ceos6:eth6"]
+    - endpoints: ["ceos5:eth3", "ceos7:eth6"]
+    - endpoints: ["ceos1:eth7", "ceos2:eth7"]
+    - endpoints: ["ceos2:eth8", "ceos3:eth7"]
+    - endpoints: ["ceos3:eth8", "ceos4:eth7"]
+    - endpoints: ["ceos4:eth8", "ceos5:eth7"]
+    - endpoints: ["ceos5:eth8", "ceos6:eth7"]
+    - endpoints: ["ceos6:eth8", "ceos7:eth7"]
+    - endpoints: ["ceos7:eth8", "ceos1:eth8"]
+    - endpoints: ["ceos1:eth9", "ceos3:eth12"]
+    - endpoints: ["ceos1:eth10", "ceos4:eth11"]
+    - endpoints: ["ceos1:eth11", "ceos5:eth10"]
+    - endpoints: ["ceos1:eth12", "ceos6:eth9"]
+    - endpoints: ["ceos2:eth12", "ceos7:eth9"]
+    - endpoints: ["ceos2:eth11", "ceos6:eth10"]
+    - endpoints: ["ceos2:eth10", "ceos5:eth11"]
+    - endpoints: ["ceos2:eth9", "ceos4:eth12"]
+    - endpoints: ["ceos3:eth11", "ceos7:eth10"]
+    - endpoints: ["ceos3:eth10", "ceos6:eth11"]
+    - endpoints: ["ceos3:eth9", "ceos5:eth12"]
+    - endpoints: ["ceos4:eth10", "ceos7:eth11"]
+    - endpoints: ["ceos4:eth9", "ceos6:eth12"]
+    - endpoints: ["ceos5:eth9", "ceos7:eth12"]

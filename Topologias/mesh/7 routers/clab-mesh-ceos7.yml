@@ -1,0 +1,144 @@
+credentials:
+  - username: admin1
+    password: admin1
+interfaces:
+  - name: Ethernet1
+    ipv4_addr: 172.16.67.2/24
+  - name: Ethernet2
+    ipv4_addr: 172.16.17.2/24
+  - name: Ethernet3
+    ipv4_addr: 172.16.27.2/24
+  - name: Ethernet4
+    ipv4_addr: 172.16.37.2/24
+  - name: Ethernet5
+    ipv4_addr: 172.16.47.2/24
+  - name: Ethernet6
+    ipv4_addr: 172.16.57.2/24
+  - name: Ethernet7
+    ipv4_addr: 192.168.67.2/24
+  - name: Ethernet8
+    ipv4_addr: 192.168.17.2/24
+  - name: Ethernet9
+    ipv4_addr: 192.168.27.2/24
+  - name: Ethernet10
+    ipv4_addr: 192.168.37.2/24
+  - name: Ethernet11
+    ipv4_addr: 192.168.47.2/24
+  - name: Ethernet12
+    ipv4_addr: 192.168.57.2/24
+  - name: Loopback0
+    ipv4_addr: 172.16.0.7/32
+ospf:
+  processID: 7
+  router_id: 172.16.0.7
+  no_passive_interfaces:
+    - Ethernet1
+    - Ethernet2
+    - Ethernet3
+    - Ethernet4
+    - Ethernet5
+    - Ethernet6
+  networks:
+    - ip: 172.16.67.0/24
+      area: 0.0.0.0
+    - ip: 172.16.17.0/24
+      area: 0.0.0.0
+    - ip: 172.16.0.7/32
+      area: 0.0.0.0
+    - ip: 172.16.27.0/24
+      area: 0.0.0.0
+    - ip: 172.16.37.0/24
+      area: 0.0.0.0
+    - ip: 172.16.47.0/24
+      area: 0.0.0.0
+    - ip: 172.16.57.0/24
+      area: 0.0.0.0
+bgp:
+  AS: 65007
+  neighbors:
+    - ipv4_addr: 172.16.17.1
+      AS: 65001
+    - ipv4_addr: 172.16.27.1
+      AS: 65002
+    - ipv4_addr: 172.16.37.1
+      AS: 65003
+    - ipv4_addr: 172.16.47.1
+      AS: 65004
+    - ipv4_addr: 172.16.57.1
+      AS: 65005
+    - ipv4_addr: 172.16.67.1
+      AS: 65006
+  advertises:
+    - network: 172.16.0.7
+      mask: 255.255.255.255
+    - network: 172.16.17.0
+      mask: 255.255.255.0
+    - network: 172.16.27.0
+      mask: 255.255.255.0
+    - network: 172.16.37.0
+      mask: 255.255.255.0
+    - network: 172.16.47.0
+      mask: 255.255.255.0
+    - network: 172.16.57.0
+      mask: 255.255.255.0
+    - network: 172.16.67.0
+      mask: 255.255.255.0
+dhcp:
+  subnets:
+    - interface: Ethernet7
+      network: 192.168.67.0/24
+      gateway: 192.168.67.2
+      dns_server:
+        - 8.8.8.8
+        - 8.8.4.4
+      start: 192.168.67.3
+      end: 192.168.67.10
+      lease: 1 days 0 hours 0 minutes
+    - interface: Ethernet8
+      network: 192.168.17.0/24
+      gateway: 192.168.17.2
+      dns_server:
+        - 1.1.1.1
+        - 8.8.4.4
+      start: 192.168.17.3
+      end: 192.168.17.10
+      lease: 2 days 0 hours 0 minutes
+    - interface: Ethernet9
+      network: 192.168.27.0/24
+      gateway: 192.168.27.2
+      dns_server:
+        - 1.1.1.1
+        - 8.8.4.4
+      start: 192.168.27.3
+      end: 192.168.27.10
+      lease: 2 days 0 hours 0 minutes
+    - interface: Ethernet10
+      network: 192.168.37.0/24
+      gateway: 192.168.37.2
+      dns_server:
+        - 1.1.1.1
+        - 8.8.4.4
+      start: 192.168.37.3
+      end: 192.168.37.10
+      lease: 2 days 0 hours 0 minutes
+    - interface: Ethernet11
+      network: 192.168.47.0/24
+      gateway: 192.168.47.2
+      dns_server:
+        - 1.1.1.1
+        - 8.8.4.4
+      start: 192.168.47.3
+      end: 192.168.47.10
+      lease: 2 days 0 hours 0 minutes
+    - interface: Ethernet12
+      network: 192.168.57.0/24
+      gateway: 192.168.57.2
+      dns_server:
+        - 1.1.1.1
+        - 8.8.4.4
+      start: 192.168.57.3
+      end: 192.168.57.10
+      lease: 2 days 0 hours 0 minutes
+ntp_servers:
+  - 172.16.0.7
+  - 172.16.7.7

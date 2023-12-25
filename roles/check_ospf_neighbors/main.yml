@@ -1,0 +1,80 @@
+---
+- name: Run OSPF Tests
+  hosts: arista
+  connection: local
+  gather_facts: false
+  pre_tasks:
+    - include_vars: "../../config_vars/{{inventory_hostname}}.yml"
+
+  tasks:
+
+  #----------------------ARISTA----------------------#
+
+    - name: execute OSPF test script
+      ansible.builtin.script: 
+        executable: python3
+        cmd: test_ospf_neighbors.py {{inventory_hostname}} {{ansible_user}} {{ansible_password}} {{ansible_network_os}}
+      register: output
+      when: ospf is defined
+
+    # - name: Display result
+    #   debug:
+    #     var: output
+    
+    - name: Check OSPF tests
+      assert:
+        that:
+          - '"True" in output.stdout_lines'
+        fail_msg: "OSPF failed to be tested. Please check {{inventory_hostname}} configuration"
+        success_msg: '{{inventory_hostname}} configuration seems correct.'
+      when: ansible_network_os == 'arista.eos.eos' and ntp is defined
+
+    # - name: Get OSPF neighbors Arista
+    #   ansible.netcommon.cli_command:
+    #     command: sh ip ospf neighbor
+    #   register: output
+    #   when: ansible_network_os == 'arista.eos.eos'
+
+    # - name: Check OSPF neighbors Arista
+    #   assert:
+    #     that:
+    #       - 'item.ip in output.stdout'
+    #     fail_msg: "{{item.interface}} from {{inventory_hostname}} the incorrect neighbors"
+    #     success_msg: "{{item.interface}} from {{inventory_hostname}} has the correct neighbors"
+    #   loop: "{{ospf.all_ospf_neighbors}}"
+    #   when: ansible_network_os == 'arista.eos.eos'
+
+
+    # - name: Check if 10.1.1.1 is in 10.0.0.0/8
+    #   ansible.builtin.set_fact:
+    #     data: "{{ '10.1.1.1' is ansible.utils.in_network '10.0.0.0/8' }}"
+
+    # - name: Display result to terminal window 1
+    #   debug:
+    #     var: (output.stdout_lines[1] | regex_replace(' +', ' ') | split(' '))[6]
+    #   when: ansible_network_os == 'arista.eos.eos'
+
+    # - name: set fact
+    #   set_fact: ospf_network = (output.stdout_lines[1 + index] | regex_replace(' +', ' ') | split(' '))[6]
+    #   loop: "{{ospf.stdout_lines | split("Neighbor ID     Instance VRF      Pri State                  Dead Time   Address         Interface" )}}"
+
+    # - name: Display result to terminal window 2
+    #   debug:
+    #     var: "{{ospf.networks[0].ip}}" #output.stdout_lines[1].split()[6] #.split("Neighbor ID     Instance VRF      Pri State                  Dead Time   Address         Interface" )
+    #   # loop: "{{output.stdout_lines}}"
+
+    # - name: Check if 10.1.1.1 is in 10.0.0.0/8
+    #   ansible.builtin.set_fact:
+    #     data: "output.stdout_lines[1].split()[7] is ansible.utils.in_network {{ospf.networks[0].ip}}"
+    #   loop: "{{output.stdout_lines}}"
+
+    # - name: Check OSPF neighbors Arista
+    #   assert:
+    #     that:
+    #       - 'output.stdout_lines[1].split()[7] is ansible.utils.in_network {{ospf.networks[0].ip}}'
+    #     # fail_msg: "{{item.interface}} from {{inventory_hostname}} the incorrect neighbors"
+    #     # success_msg: "{{item.interface}} from {{inventory_hostname}} has the correct neighbors"
+    #   loop: "{{ospf.networks}}"
+    #   when: ansible_network_os == 'arista.eos.eos'
+
+#----------------------ARISTA----------------------#

@@ -1,0 +1,44 @@
+credentials:
+  - username: admin1
+    password: admin1
+interfaces:
+  - name: Ethernet1
+    ipv4_addr: 172.16.14.2/24
+  - name: Ethernet2
+    ipv4_addr: 192.168.14.2/24
+  - name: Loopback0
+    ipv4_addr: 172.16.0.4/32
+ospf:
+  processID: 4
+  router_id: 172.16.0.4
+  no_passive_interfaces:
+    - Ethernet1
+  networks:
+    - ip: 172.16.14.0/24
+      area: 0.0.0.0
+    - ip: 172.16.0.4/32
+      area: 0.0.0.0
+bgp:
+  AS: 65004
+  neighbors:
+    - ipv4_addr: 172.16.14.1
+      AS: 65001
+  advertises:
+    - network: 172.16.0.4
+      mask: 255.255.255.255
+    - network: 172.16.14.0
+      mask: 255.255.255.0
+dhcp:
+  subnets:
+    - interface: Ethernet2
+      network: 192.168.14.0/24
+      gateway: 192.168.14.2
+      dns_server:
+        - 8.8.8.8
+        - 8.8.4.4
+      start: 192.168.14.3
+      end: 192.168.14.10
+      lease: 1 days 0 hours 0 minutes
+ntp_servers:
+  - 172.16.0.4
+  - 172.16.4.4
